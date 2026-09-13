@@ -2,7 +2,47 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring, useScroll, useTransform } from 'framer-motion';
-import { Globe, Mail, Briefcase, Settings } from 'lucide-react';
+import { Globe, Mail, Briefcase, Settings, Code, Layers, Database } from 'lucide-react';
+
+// Komponen Pembantu SVG Tech Stack Resmi
+const TechIcon = ({ name }: { name: string }) => {
+  let path = "";
+  if (name === "Laravel") path = "M23.642 5.43a.364.364 0 01.014.1v5.149c0 .135-.073.26-.189.326l-4.323 2.49v4.934a.378.378 0 01-.188.326L9.93 23.949a.316.316 0 01-.066.027c-.008.002-.016.008-.024.01a.348.348 0 01-.192 0c-.011-.002-.02-.008-.03-.012-.02-.008-.042-.014-.062-.025L.533 18.755a.376.376 0 01-.189-.326V2.974c0-.033.005-.066.014-.098.003-.012.01-.02.014-.032a.369.369 0 01.023-.058c.004-.013.015-.022.023-.033l.033-.045c.012-.01.025-.018.037-.027.014-.012.027-.024.041-.034H.53L5.043.05a.375.375 0 01.375 0L9.93 2.647h.002c.015.01.027.021.04.033l.038.027c.013.014.02.03.033.045.008.011.02.021.025.033.01.02.017.038.024.058.003.011.01.021.013.032.01.031.014.064.014.098v9.652l3.76-2.164V5.527c0-.033.004-.066.013-.098.003-.01.01-.02.013-.032a.487.487 0 01.024-.059c.007-.012.018-.02.025-.033.012-.015.021-.03.033-.043.012-.012.025-.02.037-.028.014-.01.026-.023.041-.032h.001l4.513-2.598a.375.375 0 01.375 0l4.513 2.598c.016.01.027.021.042.031.012.01.025.018.036.028.013.014.022.03.034.044.008.012.019.021.024.033.011.02.018.04.024.06.006.01.012.021.015.032zm-.74 5.032V6.179l-1.578.908-2.182 1.256v4.283zm-4.51 7.75v-4.287l-2.147 1.225-6.126 3.498v4.325zM1.093 3.624v14.588l8.273 4.761v-4.325l-4.322-2.445-.002-.003H5.04c-.014-.01-.025-.021-.04-.031-.011-.01-.024-.018-.035-.027l-.001-.002c-.013-.012-.021-.025-.031-.04-.01-.011-.021-.022-.028-.036h-.002c-.008-.014-.013-.031-.02-.047-.006-.016-.014-.027-.018-.043a.49.49 0 01-.008-.057c-.002-.014-.006-.027-.006-.041V5.789l-2.18-1.257zM5.23.81L1.47 2.974l3.76 2.164 3.758-2.164zm1.956 13.505l2.182-1.256V3.624l-1.58.91-2.182 1.255v9.435zm11.581-10.95l-3.76 2.163 3.76 2.163 3.759-2.164zm-.376 4.978L16.21 7.087 14.63 6.18v4.283l2.182 1.256 1.58.908zm-8.65 9.654l5.514-3.148 2.756-1.572-3.757-2.163-4.323 2.489-3.941 2.27z";
+  if (name === "PHP") path = "M7.01 10.207h-.944l-.515 2.648h.838c.556 0 .97-.105 1.242-.314.272-.21.455-.559.55-1.049.092-.47.05-.802-.124-.995-.175-.193-.523-.29-1.047-.29zM12 5.688C5.373 5.688 0 8.514 0 12s5.373 6.313 12 6.313S24 15.486 24 12c0-3.486-5.373-6.312-12-6.312zm-3.26 7.451c-.261.25-.575.438-.917.551-.336.108-.765.164-1.285.164H5.357l-.327 1.681H3.652l1.23-6.326h2.65c.797 0 1.378.209 1.744.628.366.418.476 1.002.33 1.752a2.836 2.836 0 0 1-.305.847c-.143.255-.33.49-.561.703zm4.024.715l.543-2.799c.063-.318.039-.536-.068-.651-.107-.116-.336-.174-.687-.174H11.46l-.704 3.625H9.388l1.23-6.327h1.367l-.327 1.682h1.218c.767 0 1.295.134 1.586.401s.378.7.263 1.299l-.572 2.944h-1.389zm7.597-2.265a2.782 2.782 0 0 1-.305.847c-.143.255-.33.49-.561.703a2.44 2.44 0 0 1-.917.551c-.336.108-.765.164-1.286.164h-1.18l-.327 1.682h-1.378l1.23-6.326h2.649c.797 0 1.378.209 1.744.628.366.417.477 1.001.331 1.751zM17.766 10.207h-.943l-.516 2.648h.838c.557 0 .971-.105 1.242-.314.272-.21.455-.559.551-1.049.092-.47.049-.802-.125-.995s-.524-.29-1.047-.29z";
+  if (name === "Next.js") path = "M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z";
+  if (name === "TypeScript") path = "M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z";
+  if (name === "CSS") path = "M0 0v20.16A3.84 3.84 0 0 0 3.84 24h16.32A3.84 3.84 0 0 0 24 20.16V3.84A3.84 3.84 0 0 0 20.16 0Zm14.256 13.08c1.56 0 2.28 1.08 2.304 2.64h-1.608c.024-.288-.048-.6-.144-.84-.096-.192-.288-.264-.552-.264-.456 0-.696.264-.696.84-.024.576.288.888.768 1.08.72.288 1.608.744 1.92 1.296q.432.648.432 1.656c0 1.608-.912 2.592-2.496 2.592-1.656 0-2.4-1.032-2.424-2.688h1.68c0 .792.264 1.176.792 1.176.264 0 .456-.072.552-.24.192-.312.24-1.176-.048-1.512-.312-.408-.912-.6-1.32-.816q-.828-.396-1.224-.936c-.24-.36-.36-.888-.36-1.536 0-1.44.936-2.472 2.424-2.448m5.4 0c1.584 0 2.304 1.08 2.328 2.64h-1.608c0-.288-.048-.6-.168-.84-.096-.192-.264-.264-.528-.264-.48 0-.72.264-.72.84s.288.888.792 1.08c.696.288 1.608.744 1.92 1.296.264.432.408.984.408 1.656.024 1.608-.888 2.592-2.472 2.592-1.68 0-2.424-1.056-2.448-2.688h1.68c0 .744.264 1.176.792 1.176.264 0 .456-.072.552-.24.216-.312.264-1.176-.048-1.512-.288-.408-.888-.6-1.32-.816-.552-.264-.96-.576-1.2-.936s-.36-.888-.36-1.536c-.024-1.44.912-2.472 2.4-2.448m-11.031.018c.711-.006 1.419.198 1.839.63.432.432.672 1.128.648 1.992H9.336c.024-.456-.096-.792-.432-.96-.312-.144-.768-.048-.888.24-.12.264-.192.576-.168.864v3.504c0 .744.264 1.128.768 1.128a.65.65 0 0 0 .552-.264c.168-.24.192-.552.168-.84h1.776c.096 1.632-.984 2.712-2.568 2.688-1.536 0-2.496-.864-2.472-2.472v-4.032c0-.816.24-1.44.696-1.848.432-.408 1.146-.624 1.857-.63";
+  if (name === "JavaScript") path = "M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z";
+  
+  if (name === "Blade") {
+    // Ikon Blade alternatif (karena tidak ada di simple-icons)
+    return (
+      <div className="group relative flex items-center justify-center w-6 h-6 md:w-7 md:h-7 hover:-translate-y-1 transition-transform cursor-default">
+        <svg viewBox="0 0 24 24" className="w-full h-full fill-[#F25A24]">
+           <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-2 17h-2V7h4c1.657 0 3 1.343 3 3 0 1.157-.655 2.161-1.611 2.645C14.73 13.313 16 14.508 16 16c0 1.657-1.343 3-3 3h-3v-2zm0-4h2c.552 0 1-.448 1-1s-.448-1-1-1h-2v2zm0 4h3c.552 0 1-.448 1-1s-.448-1-1-1h-3v2z" />
+        </svg>
+        <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
+          <div className="bg-[#1a1a1a] text-white font-medium text-[10px] md:text-xs px-2 py-1 rounded-[2px] whitespace-nowrap">
+            {name}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="group relative flex items-center justify-center w-6 h-6 md:w-7 md:h-7 hover:-translate-y-1 transition-transform cursor-default">
+      <svg viewBox="0 0 24 24" className="w-full h-full fill-[#F25A24]">
+        <path d={path} />
+      </svg>
+      <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
+        <div className="bg-[#1a1a1a] text-white font-medium text-[10px] md:text-xs px-2 py-1 rounded-[2px] whitespace-nowrap">
+          {name}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const HeroSection = () => {
   // --- CUSTOM CURSOR LOGIC ---
@@ -17,6 +57,31 @@ export const HeroSection = () => {
   // Variabel penampung sumber gambar (kosongkan sementara sampai ada aset foto)
   const prismaImageSrc = "";
   const cakraImageSrc = "";
+
+  // State untuk Filter Kategori
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  // State untuk Hover Project Bawah (Image Preview)
+  const [hoveredProject, setHoveredProject] = useState<string>('01');
+
+  // Data Proyek Terpusat
+  const projectsData = [
+    { id: '01', title: 'SuraJa', desc: 'Administrative Governance', category: 'Full-Stack' },
+    { id: '02', title: 'UniTrack', desc: 'Alumni & Career Platform', category: 'Backend' },
+    { id: '03', title: 'Sport On Website', desc: 'FYEP Capstone Project', category: 'Frontend' },
+    { id: '04', title: 'Cindyninda', desc: 'Personal Portfolio', category: 'Frontend' }
+  ];
+
+  const filteredProjects = activeCategory === 'All'
+    ? projectsData
+    : projectsData.filter(p => p.category === activeCategory);
+
+  useEffect(() => {
+    // Sinkronisasi: Pilih card pertama yang muncul setelah filter, atau kosongkan
+    if (filteredProjects.length > 0) {
+      setHoveredProject(filteredProjects[0].id);
+    }
+  }, [activeCategory]);
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
@@ -267,105 +332,127 @@ export const HeroSection = () => {
           </div>
 
           {/* PROJECT LIST GRID */}
-          <div className="w-full mt-12 md:mt-20 flex flex-col md:grid md:grid-cols-[1fr_350px] lg:grid-cols-[1fr_400px] relative items-start">
+          <div className="w-full mt-12 md:mt-20 flex flex-col md:grid md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] relative items-stretch">
 
             {/* Kolom Kiri: Daftar Proyek */}
-            <div className="flex flex-col border-t border-l border-r-0 md:border-r border-[#1a1a1a] ml-4 md:ml-10 2xl:ml-[calc((100vw-1536px)/2+2.5rem)]">
+            <div className="flex flex-col border-t border-l border-r-0 md:border-r border-[#1a1a1a] ml-4 md:ml-10 2xl:ml-[calc((100vw-1536px)/2+2.5rem)] min-w-0">
               {/* Baris 1 */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between py-8 md:py-10 border-b border-[#1a1a1a] pl-4 md:pl-8 pr-4 md:pr-10 hover:bg-[#FAF9F6] transition-colors cursor-pointer group gap-4 md:gap-0 relative overflow-visible">
-                {/* GAMBAR PREVIEW (Absolute Hover Overlay) */}
-                {prismaImageSrc && (
-                  <img
-                    src={prismaImageSrc}
-                    alt="Prisma Fotocopy"
-                    className="absolute z-50 left-0 -translate-x-[110%] top-1/2 -translate-y-1/2 object-cover shadow-[8px_8px_0px_rgba(26,26,26,1)] border-2 border-[#1a1a1a] transition-all duration-300 ease-out origin-right opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 w-32 md:w-48 h-24 md:h-32"
-                  />
-                )}
+              <div className="p-6 md:p-8 bg-transparent hover:bg-white border border-transparent border-b-[#1a1a1a] hover:border-[#1a1a1a] hover:-translate-y-2 hover:translate-x-2 hover:shadow-[-10px_10px_0px_#1a1a1a] hover:z-50 transition-all duration-300 ease-out cursor-pointer group relative min-w-0 overflow-hidden md:overflow-visible">
 
-                <div className="flex flex-row items-start gap-4 md:gap-8">
-                  <span className="text-sm font-bold text-[#1a1a1a]/50 w-8 mt-2 md:mt-3 leading-none">01</span>
-                  <div className="flex flex-col">
-                    <h3 className="text-4xl md:text-5xl text-[#1a1a1a] tracking-tight group-hover:pl-2 transition-all duration-300" style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
-                      Prisma Fotocopy & eKatalog
-                    </h3>
-                    <span className="text-lg text-[#1a1a1a]/70 font-medium mt-1">
-                      Mobile Redesign & UMKM E-Commerce
-                    </span>
-                  </div>
+                {/* GAMBAR PREVIEW (Absolute Hover Overlay - Reveal) */}
+                <div className="absolute z-50 left-6 top-1/2 -translate-y-1/2 opacity-0 scale-95 w-0 overflow-hidden pointer-events-none group-hover:w-32 group-hover:md:w-48 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out origin-left flex shrink-0">
+                  {prismaImageSrc ? (
+                    <img
+                      src={prismaImageSrc}
+                      alt="Prisma Fotocopy"
+                      className="w-32 md:w-48 h-20 md:h-28 object-cover border-2 border-[#1a1a1a] shadow-[4px_4px_0px_#1a1a1a] shrink-0 min-w-[8rem] md:min-w-[12rem]"
+                    />
+                  ) : (
+                    <div className="w-32 md:w-48 h-20 md:h-28 border-2 border-[#1a1a1a] bg-[#FAF9F6] flex items-center justify-center shadow-[4px_4px_0px_#1a1a1a] shrink-0 min-w-[8rem] md:min-w-[12rem]">
+                      <span className="text-xs font-bold text-[#1a1a1a]/50">TBD</span>
+                    </div>
+                  )}
                 </div>
-                <div className="flex flex-row gap-4 md:gap-6 flex-nowrap shrink-0 md:justify-end ml-12 md:ml-0 items-center">
-                  {/* Next.js Logo */}
-                  <div className="relative group/icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.834 14.394L10.334 9.123v7.27H8.84V7.606h1.666l5.5 7.271V7.606h1.493v8.788h-1.665z" /></svg>
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">Next.js</span>
+
+                {/* MAIN CONTENT WRAPPER */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-12 w-full">
+                  {/* TEXT WRAPPER (Structural padding shift to trigger truncate without overlap) */}
+                  <div className="flex flex-row items-start gap-4 flex-1 min-w-0 transition-all duration-300 ease-out group-hover:pl-40 group-hover:md:pl-56">
+                    <span className="text-sm font-bold text-[#1a1a1a]/50 w-6 leading-none shrink-0 transition-all duration-300">01</span>
+                    <div className="flex flex-col flex-1 min-w-0">
+                      <h3 className="text-3xl md:text-4xl lg:text-5xl text-[#1a1a1a] tracking-tight transition-all duration-300 truncate whitespace-nowrap" style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
+                        Prisma Fotocopy
+                      </h3>
+                      <span className="text-base md:text-lg text-[#1a1a1a]/70 font-medium mt-1 transition-all duration-300 truncate whitespace-nowrap">
+                        Mobile design & UMKM E-Commerce
+                      </span>
+                    </div>
                   </div>
-                  {/* React Logo */}
-                  <div className="relative group/icon">
-                    <svg width="24" height="24" viewBox="-11.5 -10.23174 23 20.46348" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><circle cx="0" cy="0" r="2.05" fill="#F25A24" /><g stroke="#F25A24" strokeWidth="1" fill="none"><ellipse rx="11" ry="4.2" /><ellipse rx="11" ry="4.2" transform="rotate(60)" /><ellipse rx="11" ry="4.2" transform="rotate(120)" /></g></svg>
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">React</span>
-                  </div>
-                  {/* Tailwind Logo */}
-                  <div className="relative group/icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z" /></svg>
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">Tailwind CSS</span>
-                  </div>
-                  {/* TypeScript Logo */}
-                  <div className="relative group/icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M21 3V21H3V3H21ZM13.88 17.58C13.88 15.7 15.35 15.34 16.5 14.86C17.65 14.38 17.9 14.16 17.9 13.62C17.9 13.04 17.3 12.82 16.7 12.82C15.68 12.82 15.22 13.48 15.2 13.5L14.04 12.38C14.06 12.36 14.78 11.2 16.7 11.2C18.66 11.2 19.64 12.28 19.64 13.64C19.64 15.54 18.06 16.02 16.94 16.48C15.82 16.94 15.58 17.18 15.58 17.7C15.58 18.28 16.14 18.64 16.96 18.64C18.16 18.64 18.84 17.84 18.86 17.82L20.08 19C20.06 19.04 19.12 20.24 16.98 20.24C14.88 20.24 13.88 19.12 13.88 17.58ZM11.4 11.42H6.38V12.92H8.08V20.06H9.72V12.92H11.4V11.42Z" /></svg>
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">TypeScript</span>
+                  <div className="flex flex-row gap-4 md:gap-6 flex-nowrap shrink-0 md:justify-end ml-12 md:ml-0 items-center">
+                    {/* Next.js Logo */}
+                    <div className="relative group/icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.834 14.394L10.334 9.123v7.27H8.84V7.606h1.666l5.5 7.271V7.606h1.493v8.788h-1.665z" /></svg>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">Next.js</span>
+                    </div>
+                    {/* React Logo */}
+                    <div className="relative group/icon">
+                      <svg width="24" height="24" viewBox="-11.5 -10.23174 23 20.46348" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><circle cx="0" cy="0" r="2.05" fill="#F25A24" /><g stroke="#F25A24" strokeWidth="1" fill="none"><ellipse rx="11" ry="4.2" /><ellipse rx="11" ry="4.2" transform="rotate(60)" /><ellipse rx="11" ry="4.2" transform="rotate(120)" /></g></svg>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">React</span>
+                    </div>
+                    {/* Tailwind Logo */}
+                    <div className="relative group/icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z" /></svg>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">Tailwind CSS</span>
+                    </div>
+                    {/* TypeScript Logo */}
+                    <div className="relative group/icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M21 3V21H3V3H21ZM13.88 17.58C13.88 15.7 15.35 15.34 16.5 14.86C17.65 14.38 17.9 14.16 17.9 13.62C17.9 13.04 17.3 12.82 16.7 12.82C15.68 12.82 15.22 13.48 15.2 13.5L14.04 12.38C14.06 12.36 14.78 11.2 16.7 11.2C18.66 11.2 19.64 12.28 19.64 13.64C19.64 15.54 18.06 16.02 16.94 16.48C15.82 16.94 15.58 17.18 15.58 17.7C15.58 18.28 16.14 18.64 16.96 18.64C18.16 18.64 18.84 17.84 18.86 17.82L20.08 19C20.06 19.04 19.12 20.24 16.98 20.24C14.88 20.24 13.88 19.12 13.88 17.58ZM11.4 11.42H6.38V12.92H8.08V20.06H9.72V12.92H11.4V11.42Z" /></svg>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">TypeScript</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Baris 2 */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between py-8 md:py-10 border-b border-[#1a1a1a] pl-4 md:pl-8 pr-4 md:pr-10 hover:bg-[#FAF9F6] transition-colors cursor-pointer group gap-4 md:gap-0 relative overflow-visible">
-                {/* GAMBAR PREVIEW (Absolute Hover Overlay) */}
-                {cakraImageSrc && (
-                  <img
-                    src={cakraImageSrc}
-                    alt="Cakra Muda"
-                    className="absolute z-50 left-0 -translate-x-[110%] top-1/2 -translate-y-1/2 object-cover shadow-[8px_8px_0px_rgba(26,26,26,1)] border-2 border-[#1a1a1a] transition-all duration-300 ease-out origin-right opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 w-32 md:w-48 h-24 md:h-32"
-                  />
-                )}
+              <div className="p-6 md:p-8 bg-transparent hover:bg-white border border-transparent border-b-[#1a1a1a] hover:border-[#1a1a1a] hover:-translate-y-2 hover:translate-x-2 hover:shadow-[-10px_10px_0px_#1a1a1a] hover:z-50 transition-all duration-300 ease-out cursor-pointer group relative min-w-0 overflow-hidden md:overflow-visible">
 
-                <div className="flex flex-row items-start gap-4 md:gap-8">
-                  <span className="text-sm font-bold text-[#1a1a1a]/50 w-8 mt-2 md:mt-3 leading-none">02</span>
-                  <div className="flex flex-col">
-                    <h3 className="text-4xl md:text-5xl text-[#1a1a1a] tracking-tight group-hover:pl-2 transition-all duration-300" style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
-                      Cakra Muda
-                    </h3>
-                    <span className="text-lg text-[#1a1a1a]/70 font-medium mt-1">
-                      Organization Landing Page & System Integration
-                    </span>
-                  </div>
+                {/* GAMBAR PREVIEW (Absolute Hover Overlay - Reveal) */}
+                <div className="absolute z-50 left-6 top-1/2 -translate-y-1/2 opacity-0 scale-95 w-0 overflow-hidden pointer-events-none group-hover:w-32 group-hover:md:w-48 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out origin-left flex shrink-0">
+                  {cakraImageSrc ? (
+                    <img
+                      src={cakraImageSrc}
+                      alt="Cakra Muda"
+                      className="w-32 md:w-48 h-20 md:h-28 object-cover border-2 border-[#1a1a1a] shadow-[4px_4px_0px_#1a1a1a] shrink-0 min-w-[8rem] md:min-w-[12rem]"
+                    />
+                  ) : (
+                    <div className="w-32 md:w-48 h-20 md:h-28 border-2 border-[#1a1a1a] bg-[#FAF9F6] flex items-center justify-center shadow-[4px_4px_0px_#1a1a1a] shrink-0 min-w-[8rem] md:min-w-[12rem]">
+                      <span className="text-xs font-bold text-[#1a1a1a]/50">TBD</span>
+                    </div>
+                  )}
                 </div>
-                <div className="flex flex-row gap-4 md:gap-6 flex-nowrap shrink-0 md:justify-end ml-12 md:ml-0 items-center">
-                  {/* Next.js Logo */}
-                  <div className="relative group/icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.834 14.394L10.334 9.123v7.27H8.84V7.606h1.666l5.5 7.271V7.606h1.493v8.788h-1.665z" /></svg>
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">Next.js</span>
+
+                {/* MAIN CONTENT WRAPPER */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-12 w-full">
+                  {/* TEXT WRAPPER (Structural padding shift to trigger truncate without overlap) */}
+                  <div className="flex flex-row items-start gap-4 flex-1 min-w-0 transition-all duration-300 ease-out group-hover:pl-40 group-hover:md:pl-56">
+                    <span className="text-sm font-bold text-[#1a1a1a]/50 w-6 leading-none shrink-0 transition-all duration-300">02</span>
+                    <div className="flex flex-col flex-1 min-w-0">
+                      <h3 className="text-3xl md:text-4xl lg:text-5xl text-[#1a1a1a] tracking-tight transition-all duration-300 truncate whitespace-nowrap" style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
+                        Cakra Muda
+                      </h3>
+                      <span className="text-base md:text-lg text-[#1a1a1a]/70 font-medium mt-1 transition-all duration-300 truncate whitespace-nowrap">
+                        Organization Landing Page & System Integration
+                      </span>
+                    </div>
                   </div>
-                  {/* React Logo */}
-                  <div className="relative group/icon">
-                    <svg width="24" height="24" viewBox="-11.5 -10.23174 23 20.46348" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><circle cx="0" cy="0" r="2.05" fill="#F25A24" /><g stroke="#F25A24" strokeWidth="1" fill="none"><ellipse rx="11" ry="4.2" /><ellipse rx="11" ry="4.2" transform="rotate(60)" /><ellipse rx="11" ry="4.2" transform="rotate(120)" /></g></svg>
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">React</span>
-                  </div>
-                  {/* Tailwind Logo */}
-                  <div className="relative group/icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z" /></svg>
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">Tailwind CSS</span>
+                  <div className="flex flex-row gap-4 md:gap-6 flex-nowrap shrink-0 md:justify-end ml-12 md:ml-0 items-center">
+                    {/* Next.js Logo */}
+                    <div className="relative group/icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.834 14.394L10.334 9.123v7.27H8.84V7.606h1.666l5.5 7.271V7.606h1.493v8.788h-1.665z" /></svg>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">Next.js</span>
+                    </div>
+                    {/* React Logo */}
+                    <div className="relative group/icon">
+                      <svg width="24" height="24" viewBox="-11.5 -10.23174 23 20.46348" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><circle cx="0" cy="0" r="2.05" fill="#F25A24" /><g stroke="#F25A24" strokeWidth="1" fill="none"><ellipse rx="11" ry="4.2" /><ellipse rx="11" ry="4.2" transform="rotate(60)" /><ellipse rx="11" ry="4.2" transform="rotate(120)" /></g></svg>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">React</span>
+                    </div>
+                    {/* Tailwind Logo */}
+                    <div className="relative group/icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="#F25A24" className="w-8 h-8 md:w-10 md:h-10 transform group-hover/icon:scale-110 transition-transform"><path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z" /></svg>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/icon:opacity-100 transition-opacity bg-[#1a1a1a] text-white text-xs font-bold px-2 py-1 whitespace-nowrap pointer-events-none">Tailwind CSS</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* --- KOLOM KANAN: KOTAK IMPACT DRIVEN --- */}
-            <div className="relative w-full self-stretch border-t border-[#1a1a1a]">
+            <div className="relative w-full h-full">
 
-              {/* Wrapper Absolut untuk 2 Ikon (Tidak Sticky, terikat pada atap wrapper) */}
+              {/* Wrapper Absolut untuk 2 Ikon (TETAP DI ATAS, TIDAK IKUT SCROLL) */}
               <div className="absolute -top-14 -left-28 flex flex-row z-20">
                 {/* Kotak Tas (Menggantung di luar kiri) */}
-                <div className="w-14 h-14 bg-white border border-[#1a1a1a] border-b-0 flex items-center justify-center">
+                <div className="w-14 h-14 bg-transparent border border-[#1a1a1a] border-b-0 flex items-center justify-center">
                   <Briefcase className="text-[#1a1a1a] w-6 h-6" />
                 </div>
                 {/* Kotak Gerigi (Rata dengan ujung kiri kotak hitam) */}
@@ -374,22 +461,233 @@ export const HeroSection = () => {
                 </div>
               </div>
 
-              {/* Kotak Gelap (Sticky) */}
-              <div className="bg-[#1a1a1a] text-white p-6 md:p-8 pt-6 md:pt-8 sticky top-24 md:top-28 h-fit w-full -mt-14 z-10">
-                {/* Teks Konten */}
-                <h3
-                  className="text-4xl md:text-5xl uppercase tracking-tighter leading-[0.9] mb-4"
-                  style={{ fontFamily: 'Impact, Arial, sans-serif' }}
-                >
-                  IMPACT DRIVEN
-                </h3>
-                <p className="text-white/80 text-sm md:text-base leading-snug max-w-[200px] md:max-w-[260px] text-justify">
-                  Delivering highly performant & maintainable web solutions
-                </p>
-              </div>
+              {/* STICKY GROUP (Hanya Kotak Hitam yang Meluncur Turun) */}
+              <div className="sticky top-12 md:top-24 w-full h-fit -mt-14 z-10">
+                {/* Kotak Gelap */}
+                <div className="bg-[#1a1a1a] text-white px-6 md:px-8 py-4 md:py-6 h-fit w-full relative z-10 flex flex-col items-start justify-start">
+                  {/* Teks Konten */}
+                  <h3
+                    className="text-4xl md:text-5xl uppercase tracking-tighter leading-[0.9] mb-4"
+                    style={{ fontFamily: 'Impact, Arial, sans-serif' }}
+                  >
+                    IMPACT DRIVEN
+                  </h3>
+                  <p className="text-white/80 text-sm md:text-base leading-relaxed text-left">
+                    Delivering highly<br />
+                    performant &<br />
+                    maintainable<br />
+                    web solutions
+                  </p>
+                </div>
 
+              </div>
             </div>
 
+          </div>
+
+          {/* SECTION HEADER: SELECTED PROJECTS (Di Bawah Proyek) */}
+          <div className="w-full mt-32 md:mt-48 flex flex-col items-center justify-center text-center">
+            {/* 1. Judul Utama */}
+            <div className="flex flex-col items-center justify-center w-full">
+              <h2
+                className="text-[10vw] md:text-[90px] lg:text-[130px] leading-none text-[#1a1a1a] uppercase tracking-tighter relative -left-4 md:-left-12"
+                style={{ fontFamily: 'Impact, Arial, sans-serif' }}
+              >
+                SELECTED
+              </h2>
+              <h2
+                className="text-[10vw] md:text-[90px] lg:text-[130px] leading-none uppercase tracking-tighter text-white relative left-4 md:left-12 mt-2 md:mt-4 lg:mt-6 flex flex-row"
+                style={{ fontFamily: 'Impact, Arial, sans-serif' }}
+              >
+                {"PROJECTS".split('').map((char, index) => (
+                  <motion.span
+                    key={index}
+                    className="inline-block text-white cursor-none"
+                    style={{ WebkitTextStroke: '3px #1a1a1a' }}
+                    initial={{
+                      textShadow: '1px 1px 0px #1a1a1a, 2px 2px 0px #1a1a1a, 3px 3px 0px #1a1a1a, 4px 4px 0px #1a1a1a, 5px 5px 0px #1a1a1a, 6px 6px 0px #1a1a1a, 7px 7px 0px #1a1a1a, 8px 8px 0px #1a1a1a'
+                    }}
+                    whileHover={{
+                      y: -15,
+                      scale: 1.05,
+                      textShadow: '1px 1px 0px #1a1a1a, 2px 2px 0px #1a1a1a, 3px 3px 0px #1a1a1a, 4px 4px 0px #1a1a1a, 5px 5px 0px #1a1a1a, 6px 6px 0px #1a1a1a, 7px 7px 0px #1a1a1a, 8px 8px 0px #1a1a1a, 9px 9px 0px #1a1a1a, 10px 10px 0px #1a1a1a, 11px 11px 0px #1a1a1a, 12px 12px 0px #1a1a1a, 13px 13px 0px #1a1a1a, 14px 14px 0px #1a1a1a, 15px 15px 0px #1a1a1a'
+                    }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </h2>
+            </div>
+
+            {/* 2. Subtitle */}
+            <p className="text-lg md:text-xl text-[#1a1a1a]/70 font-medium max-w-2xl mt-6 md:mt-8 px-4">
+              Projects I&apos;ve enjoyed working on—built, tweaked, and learned from.
+            </p>
+          </div>
+          {/* KATEGORI FILTER (Di Bawah Proyek) */}
+          {/* KATEGORI FILTER (Di Bawah Proyek) */}
+          <div className="w-full mt-10 md:mt-16 grid grid-cols-1 lg:grid-cols-[1fr_auto] grid-rows-[auto_1fr] pl-4 md:pl-10 2xl:pl-[calc((100vw-1536px)/2+2.5rem)] pr-4 md:pr-10 2xl:pr-[calc((100vw-1536px)/2+2.5rem)]">
+
+            {/* Primary Filter Group Container (Kolom auto kanan, menempel sempurna di batas margin) */}
+            <div className="lg:col-start-2 lg:row-start-1 flex flex-row items-stretch border border-[#1a1a1a] bg-white relative z-10 w-fit justify-self-end lg:justify-self-auto">
+
+              {/* Tab All */}
+              <button
+                onClick={() => setActiveCategory('All')}
+                className={`relative shrink-0 px-6 md:px-8 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider border-r border-[#1a1a1a] transition-all duration-300 group ${activeCategory === 'All'
+                  ? 'bg-transparent text-white z-0'
+                  : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-mt-[1px] hover:-mb-[1px] hover:-ml-[1px]'
+                  }`}
+              >
+                <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'All' ? 'scale-x-100' : 'scale-x-0'}`} />
+                <span className="relative z-10 flex items-center justify-center">All</span>
+              </button>
+
+              {/* Tab Frontend */}
+              <button
+                onClick={() => setActiveCategory('Frontend')}
+                className={`relative shrink-0 px-5 md:px-7 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider border-r border-[#1a1a1a] transition-all duration-300 group ${activeCategory === 'Frontend'
+                  ? 'bg-transparent text-white z-0'
+                  : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-mt-[1px] hover:-mb-[1px] hover:-ml-[1px]'
+                  }`}
+              >
+                <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'Frontend' ? 'scale-x-100' : 'scale-x-0'}`} />
+                <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
+                  Frontend
+                  <Code className={`w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110 ${activeCategory === 'Frontend' ? 'text-white' : 'text-[#F25A24]'}`} strokeWidth={2.5} />
+                </span>
+              </button>
+
+              {/* Tab Full-Stack */}
+              <button
+                onClick={() => setActiveCategory('Full-Stack')}
+                className={`relative shrink-0 px-5 md:px-7 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider border-r border-[#1a1a1a] transition-all duration-300 group ${activeCategory === 'Full-Stack'
+                  ? 'bg-transparent text-white z-0'
+                  : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-mt-[1px] hover:-mb-[1px] hover:-ml-[1px]'
+                  }`}
+              >
+                <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'Full-Stack' ? 'scale-x-100' : 'scale-x-0'}`} />
+                <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
+                  Full-Stack
+                  <Layers className={`w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110 ${activeCategory === 'Full-Stack' ? 'text-white' : 'text-[#F25A24]'}`} strokeWidth={2.5} />
+                </span>
+              </button>
+
+              {/* Tab Backend */}
+              <button
+                onClick={() => setActiveCategory('Backend')}
+                className={`relative shrink-0 px-5 md:px-7 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider transition-all duration-300 group ${activeCategory === 'Backend'
+                  ? 'bg-transparent text-white z-0'
+                  : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-m-[1px]'
+                  }`}
+              >
+                <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'Backend' ? 'scale-x-100' : 'scale-x-0'}`} />
+                <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
+                  Backend
+                  <Database className={`w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110 ${activeCategory === 'Backend' ? 'text-white' : 'text-[#F25A24]'}`} strokeWidth={2.5} />
+                </span>
+              </button>
+            </div>
+
+            {/* KOLOM KIRI: IMAGE PREVIEW (1fr, Otomatis Mengisi Ruang Kiri hingga Margin Kiri!) */}
+            <div className="hidden lg:flex flex-col lg:col-start-1 lg:row-start-2 relative z-10 transition-all duration-500 ease-out -mt-[1px] h-full min-h-[520px] xl:min-h-[550px]">
+              <div className="w-full h-[75%] border border-[#1a1a1a] bg-[#FAF9F6] flex flex-col relative overflow-hidden">
+                {/* Placeholder Dynamic Content */}
+                <div className="flex-1 flex items-center justify-center bg-[#1a1a1a]/5 transition-opacity duration-300 relative min-h-0">
+                  <span className="font-bold text-xl xl:text-2xl text-[#1a1a1a]/30 uppercase tracking-widest text-center px-4 mb-8">
+                    {hoveredProject === '01' ? 'SuraJa Preview' :
+                      hoveredProject === '02' ? 'UniTrack Preview' :
+                        hoveredProject === '03' ? 'Sport On Preview' :
+                          hoveredProject === '04' ? 'Portfolio Preview' : 'Preview'}
+                  </span>
+                </div>
+
+                {/* Area Bawah Panel Preview Dinamis (Fleksibel menampung 2 Baris Vertikal) */}
+                <div className="w-full border-t border-[#1a1a1a] bg-[#FAF9F6] z-20 flex flex-col shrink-0">
+                  
+                  {/* Baris Atas: Area Nama Proyek & Tech Stack */}
+                  <div className="flex-1 flex items-center justify-between px-6 md:px-10 py-5 lg:py-7 min-w-0">
+                    {/* Teks Nama Proyek Dinamis (Kiri) */}
+                    <span className="text-xl md:text-2xl lg:text-3xl text-[#1a1a1a] tracking-tight transition-all duration-300 min-w-0 truncate" style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
+                      {hoveredProject === '01' ? 'SuraJa' :
+                        hoveredProject === '02' ? 'UniTrack' :
+                          hoveredProject === '03' ? 'Sport On Website' :
+                            hoveredProject === '04' ? 'Cindyninda' : 'Project'}
+                    </span>
+                  
+                  {/* Tech Stack Logo Badges Dinamis (Kanan) */}
+                  <div className="flex items-center gap-3 shrink-0 ml-4">
+                    {hoveredProject === '01' && (
+                      <>
+                        <TechIcon name="Laravel" />
+                        <TechIcon name="Blade" />
+                        <TechIcon name="CSS" />
+                        <TechIcon name="JavaScript" />
+                      </>
+                    )}
+                    {hoveredProject === '02' && (
+                      <>
+                        <TechIcon name="Laravel" />
+                        <TechIcon name="Blade" />
+                      </>
+                    )}
+                    {hoveredProject === '03' && (
+                      <>
+                        <TechIcon name="Next.js" />
+                        <TechIcon name="TypeScript" />
+                      </>
+                    )}
+                    {hoveredProject === '04' && (
+                      <>
+                        <TechIcon name="Next.js" />
+                        <TechIcon name="TypeScript" />
+                        <TechIcon name="JavaScript" />
+                        <TechIcon name="CSS" />
+                      </>
+                    )}
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Baris Bawah Tambahan: Kotak Label Kategori (Melampaui batas h-[75%] secara natural) */}
+              <div className="flex w-fit border-t border-b border-l border-[#1a1a1a] shrink-0 bg-[#FAF9F6] -mt-[1px] relative z-20">
+                <div className="px-5 md:px-7 py-3 md:py-4 flex items-center justify-center gap-2 md:gap-3 border-r border-[#1a1a1a] bg-white shrink-0">
+                  <Code className="w-4 h-4 md:w-5 md:h-5 text-[#F25A24] shrink-0" strokeWidth={2.5} />
+                  <span className="font-bold text-[#1a1a1a] text-sm md:text-base uppercase tracking-wider truncate">
+                    {hoveredProject === '01' ? 'Full-Stack' :
+                      hoveredProject === '02' ? 'Backend' :
+                        hoveredProject === '03' ? 'Frontend' :
+                          hoveredProject === '04' ? 'Frontend' : 'Category'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* KOLOM KANAN: DAFTAR CARD PROYEK LIST (Auto, lebarnya mengunci selebar filter di atasnya) */}
+            <div className="lg:col-start-2 lg:row-start-2 flex flex-col w-full min-w-0 border-x border-[#1a1a1a] bg-[#FAF9F6] relative z-0 -mt-[1px] -ml-[1px] group/list self-start">
+
+              {filteredProjects.map((project) => (
+                  <div
+                  key={project.id}
+                  onMouseEnter={() => setHoveredProject(project.id)}
+                  className="h-[130px] xl:h-[137.5px] flex items-center px-6 md:px-8 bg-transparent hover:bg-white border border-transparent border-b-[#1a1a1a] hover:border-[#1a1a1a] hover:-translate-y-2 hover:translate-x-2 hover:shadow-[-10px_10px_0px_#1a1a1a] hover:z-50 transition-all duration-300 ease-out cursor-pointer group relative min-w-0 group-hover/list:opacity-40 group-hover/list:bg-black/5 hover:!opacity-100 hover:!bg-white"
+                >
+                  <div className="flex flex-row items-start gap-4 flex-1 min-w-0">
+                    <span className="text-sm font-bold text-[#1a1a1a]/50 w-6 leading-none shrink-0 transition-all duration-300">{project.id}</span>
+                    <div className="flex flex-col flex-1 min-w-0">
+                      <h3 className="text-3xl md:text-4xl lg:text-5xl text-[#1a1a1a] tracking-tight transition-all duration-300 truncate whitespace-nowrap" style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
+                        {project.title}
+                      </h3>
+                      <span className="text-base md:text-lg text-[#1a1a1a]/70 font-medium mt-1 transition-all duration-300 truncate whitespace-nowrap">
+                        {project.desc}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </main>
