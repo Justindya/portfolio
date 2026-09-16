@@ -51,10 +51,10 @@ export const HeroSection = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Spring config untuk pergerakan kursor yang mulus (smooth) tanpa delay berlebih
-  const springConfig = { damping: 25, stiffness: 700 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+  // Gunakan raw MotionValue secara langsung tanpa efek pegas (spring) untuk respons instan
+  // const springConfig = { damping: 25, stiffness: 700 };
+  // const cursorXSpring = useSpring(cursorX, springConfig);
+  // const cursorYSpring = useSpring(cursorY, springConfig);
 
   // Variabel penampung sumber gambar (kosongkan sementara sampai ada aset foto)
   const prismaImageSrc = "";
@@ -101,9 +101,9 @@ export const HeroSection = () => {
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
-      // Offset -24 agar pusat kursor (lingkaran 48px) tepat berada di ujung panah mouse asli
-      cursorX.set(e.clientX - 24);
-      cursorY.set(e.clientY - 24);
+      // Offset -3 agar ujung panah (tip) jatuh tepat di koordinat klik mouse asli
+      cursorX.set(e.clientX - 3);
+      cursorY.set(e.clientY - 3);
     };
 
     window.addEventListener('mousemove', moveCursor);
@@ -112,11 +112,11 @@ export const HeroSection = () => {
     };
   }, [cursorX, cursorY]);
 
-  // Efek bayangan isometrik bertumpuk serong ke kiri bawah (10 layer)
-  const baseIsometricShadow = '-1px 1px 0px #111111, -2px 2px 0px #111111, -3px 3px 0px #111111, -4px 4px 0px #111111, -5px 5px 0px #111111, -6px 6px 0px #111111, -7px 7px 0px #111111, -8px 8px 0px #111111, -9px 9px 0px #111111, -10px 10px 0px #111111';
+  // Efek bayangan isometrik bertumpuk serong ke kiri bawah (Blok 3D tegas: 12 layer untuk normal state)
+  const baseIsometricShadow = '-1px 1px 0px #1a1a1a, -2px 2px 0px #1a1a1a, -3px 3px 0px #1a1a1a, -4px 4px 0px #1a1a1a, -5px 5px 0px #1a1a1a, -6px 6px 0px #1a1a1a, -7px 7px 0px #1a1a1a, -8px 8px 0px #1a1a1a, -9px 9px 0px #1a1a1a, -10px 10px 0px #1a1a1a, -11px 11px 0px #1a1a1a, -12px 12px 0px #1a1a1a';
 
-  // Efek bayangan isometrik saat di-hover (memanjang hingga 16 layer)
-  const hoverIsometricShadow = '-1px 1px 0px #111111, -2px 2px 0px #111111, -3px 3px 0px #111111, -4px 4px 0px #111111, -5px 5px 0px #111111, -6px 6px 0px #111111, -7px 7px 0px #111111, -8px 8px 0px #111111, -9px 9px 0px #111111, -10px 10px 0px #111111, -11px 11px 0px #111111, -12px 12px 0px #111111, -13px 13px 0px #111111, -14px 14px 0px #111111, -15px 15px 0px #111111, -16px 16px 0px #111111';
+  // Efek bayangan isometrik saat di-hover (memanjang sangat dalam hingga 24 layer)
+  const hoverIsometricShadow = '-1px 1px 0px #1a1a1a, -2px 2px 0px #1a1a1a, -3px 3px 0px #1a1a1a, -4px 4px 0px #1a1a1a, -5px 5px 0px #1a1a1a, -6px 6px 0px #1a1a1a, -7px 7px 0px #1a1a1a, -8px 8px 0px #1a1a1a, -9px 9px 0px #1a1a1a, -10px 10px 0px #1a1a1a, -11px 11px 0px #1a1a1a, -12px 12px 0px #1a1a1a, -13px 13px 0px #1a1a1a, -14px 14px 0px #1a1a1a, -15px 15px 0px #1a1a1a, -16px 16px 0px #1a1a1a, -17px 17px 0px #1a1a1a, -18px 18px 0px #1a1a1a, -19px 19px 0px #1a1a1a, -20px 20px 0px #1a1a1a, -21px 21px 0px #1a1a1a, -22px 22px 0px #1a1a1a, -23px 23px 0px #1a1a1a, -24px 24px 0px #1a1a1a';
 
   // --- SCROLL ANIMATIONS ---
   const { scrollY } = useScroll();
@@ -140,7 +140,7 @@ export const HeroSection = () => {
         <motion.span
           key={index}
           className={`inline-block ${customClasses} cursor-none`}
-          style={is3D ? { WebkitTextStroke: '3px #1a1a1a' } : undefined}
+          style={is3D ? { WebkitTextStroke: '2px #1a1a1a', WebkitTextFillColor: 'white', color: 'white' } : undefined}
           initial={is3D ? { textShadow: baseIsometricShadow } : {}}
           whileHover={{
             y: -20,
@@ -156,17 +156,32 @@ export const HeroSection = () => {
   };
 
   return (
-    // Tambahkan cursor-none untuk menyembunyikan kursor bawaan pada area hero ini
-    <section id="about-me" className="relative w-full min-h-screen bg-[#FAF9F6] flex flex-col overflow-clip font-sans cursor-none selection:bg-[#F25A24] selection:text-white">
+    // Tambahkan overflow-clip dan sembunyikan kursor bawaan hanya di layar desktop (md:)
+    <section id="about-me" className="relative w-full min-h-screen bg-[#FAF9F6] flex flex-col overflow-clip font-sans md:cursor-none md:[&_*]:!cursor-none selection:bg-[#F25A24] selection:text-white">
 
-      {/* CUSTOM CURSOR ELEMENT */}
+      {/* CUSTOM CURSOR ELEMENT (Hanya tampil di Desktop) */}
       <motion.div
-        className="fixed top-0 left-0 w-12 h-12 border-[3px] border-[#F25A24] rounded-full pointer-events-none z-50"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
+          x: cursorX,
+          y: cursorY,
         }}
-      />
+      >
+        {/* Premium Custom Arrow Pointer */}
+        <svg 
+          viewBox="0 0 24 32" 
+          className="w-auto h-9 md:h-12 drop-shadow-[0_8px_12px_rgba(0,0,0,0.6)]"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <path 
+            d="M2 2 L2 24 L8 18 L13.5 28 L17.5 25.5 L12 15.5 L20 15.5 Z" 
+            fill="#111111" 
+            stroke="white" 
+            strokeWidth="2.5" 
+            strokeLinejoin="round"
+          />
+        </svg>
+      </motion.div>
 
       {/* Background Vertical Grid Lines */}
       <div className="absolute inset-0 pointer-events-none grid grid-cols-4 divide-x divide-gray-200/80 z-0">
@@ -184,13 +199,13 @@ export const HeroSection = () => {
         className="fixed top-6 md:top-10 left-0 right-0 z-50 flex justify-between items-center transition-all duration-300 px-4 md:px-10"
       >
         <motion.div
-          className="h-12 md:h-16 overflow-hidden flex items-start justify-center"
+          className="h-10 md:h-12 w-auto flex items-start justify-start overflow-hidden pt-1"
           style={{ x: leftLogoX, opacity: leftLogoOpacity }}
         >
           <Image
             src={catSvg}
             alt="Cat Logo"
-            className="h-[140%] w-auto object-contain object-top pointer-events-none [transform:scaleX(-1)] drop-shadow-md"
+            className="h-[115%] w-auto object-contain pointer-events-none -scale-x-100 drop-shadow-md"
           />
         </motion.div>
 
@@ -241,33 +256,38 @@ export const HeroSection = () => {
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 70, damping: 15, delay: 0.5 }}
-            className="text-center flex flex-col items-center justify-center w-full"
+            className="text-center flex flex-col items-center justify-center w-full gap-4 md:gap-8"
           >
             {/* Baris Pertama: HELLO (PUTIH 3D INTERAKTIF) & THERE (SOLID FLAT STATIS) */}
             <h2
-              className="font-black uppercase leading-[0.85] tracking-tighter flex flex-row items-baseline justify-center gap-2 md:gap-4"
+              className="uppercase leading-[0.85] tracking-tighter flex flex-row flex-wrap items-baseline justify-center gap-x-4 gap-y-2 md:gap-4 w-full"
               style={{ fontFamily: 'Impact, Arial, sans-serif' }}
             >
               <div className="flex flex-row">
                 {renderInteractiveWord("HELLO,", true, "text-[14vw] md:text-[110px] lg:text-[150px] text-white")}
               </div>
 
-              <span className="text-[11vw] md:text-[90px] lg:text-[120px] text-[#1a1a1a]">
+              <span className="text-[14vw] md:text-[90px] lg:text-[120px] text-[#1a1a1a]">
                 THERE!
               </span>
             </h2>
 
             {/* Baris Kedua: I'M (SOLID FLAT STATIS) & CINDY NINDA (PUTIH 3D INTERAKTIF) */}
             <h2
-              className="font-black uppercase leading-[0.85] tracking-tighter mt-8 md:mt-12 flex flex-row items-baseline justify-center gap-2 md:gap-4"
+              className="uppercase leading-[0.85] tracking-tighter mt-0 md:mt-4 flex flex-row flex-wrap items-baseline justify-center gap-x-4 gap-y-2 md:gap-4 w-full"
               style={{ fontFamily: 'Impact, Arial, sans-serif' }}
             >
-              <span className="text-[11vw] md:text-[90px] lg:text-[120px] text-[#1a1a1a]">
+              <span className="text-[14vw] md:text-[90px] lg:text-[120px] text-[#1a1a1a]">
                 I&apos;M
               </span>
 
-              <div className="flex flex-row">
-                {renderInteractiveWord("CINDY NINDA", true, "text-[14vw] md:text-[110px] lg:text-[150px] text-white")}
+              <div className="flex flex-row flex-wrap justify-center gap-x-4 gap-y-2 md:gap-4">
+                <div className="flex flex-row">
+                  {renderInteractiveWord("CINDY", true, "text-[14vw] md:text-[110px] lg:text-[150px] text-white")}
+                </div>
+                <div className="flex flex-row">
+                  {renderInteractiveWord("NINDA", true, "text-[14vw] md:text-[110px] lg:text-[150px] text-white")}
+                </div>
               </div>
             </h2>
           </motion.div>
@@ -316,13 +336,13 @@ export const HeroSection = () => {
           {/* --- EXPERIENCES SECTION HEADER --- */}
           <div id="experiences" className="w-full flex flex-col items-start mt-20 md:mt-32 px-4 md:px-10 max-w-screen-2xl mx-auto">
             <h2
-              className="text-[10vw] md:text-[90px] lg:text-[130px] leading-none text-[#1a1a1a] uppercase tracking-tighter"
+              className="text-[8vw] sm:text-[9vw] md:text-[90px] lg:text-[130px] leading-none text-[#1a1a1a] uppercase tracking-tighter"
               style={{ fontFamily: 'Impact, Arial, sans-serif' }}
             >
               PROFESSIONAL
             </h2>
             <h2
-              className="text-[10vw] md:text-[90px] lg:text-[130px] leading-none uppercase tracking-tighter flex flex-row mt-2 md:mt-4 lg:mt-6"
+              className="text-[8vw] sm:text-[9vw] md:text-[90px] lg:text-[130px] leading-none uppercase tracking-tighter flex flex-row flex-wrap mt-6 md:mt-4 lg:mt-6"
               style={{ fontFamily: 'Impact, Arial, sans-serif' }}
             >
               {"EXPERIENCES".split('').map((char, index) => (
@@ -353,7 +373,7 @@ export const HeroSection = () => {
           <div className="w-full mt-12 md:mt-20 flex flex-col md:grid md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] relative items-stretch">
 
             {/* Kolom Kiri: Daftar Proyek */}
-            <div className="flex flex-col border-t border-l border-r-0 md:border-r border-[#1a1a1a] ml-4 md:ml-10 2xl:ml-[calc((100vw-1536px)/2+2.5rem)] min-w-0">
+            <div className="flex flex-col border-t border-l border-r border-[#1a1a1a] mx-4 md:mx-0 md:ml-10 2xl:ml-[calc((100vw-1536px)/2+2.5rem)] min-w-0">
               {/* Baris 1 */}
               <div className="p-6 md:p-8 bg-transparent hover:bg-white border border-transparent border-b-[#1a1a1a] hover:border-[#1a1a1a] hover:-translate-y-2 hover:translate-x-2 hover:shadow-[-10px_10px_0px_#1a1a1a] hover:z-50 transition-all duration-300 ease-out cursor-pointer group relative min-w-0 overflow-hidden md:overflow-visible">
 
@@ -514,7 +534,7 @@ export const HeroSection = () => {
                 SELECTED
               </h2>
               <h2
-                className="text-[10vw] md:text-[90px] lg:text-[130px] leading-none uppercase tracking-tighter text-white relative left-4 md:left-12 mt-2 md:mt-4 lg:mt-6 flex flex-row"
+                className="text-[10vw] md:text-[90px] lg:text-[130px] leading-none uppercase tracking-tighter text-white relative left-4 md:left-12 mt-6 md:mt-4 lg:mt-6 flex flex-row"
                 style={{ fontFamily: 'Impact, Arial, sans-serif' }}
               >
                 {"PROJECTS".split('').map((char, index) => (
@@ -547,8 +567,8 @@ export const HeroSection = () => {
           {/* KATEGORI FILTER (Di Bawah Proyek) */}
           <div className="w-full mt-10 md:mt-16 grid grid-cols-1 lg:grid-cols-[1fr_auto] grid-rows-[auto_1fr] pl-4 md:pl-10 2xl:pl-[calc((100vw-1536px)/2+2.5rem)] pr-4 md:pr-10 2xl:pr-[calc((100vw-1536px)/2+2.5rem)]">
 
-            {/* Primary Filter Group Container (Kolom auto kanan, menempel sempurna di batas margin) */}
-            <div className="lg:col-start-2 lg:row-start-1 flex flex-row items-stretch border border-[#1a1a1a] bg-white relative z-10 w-fit justify-self-end lg:justify-self-auto">
+            {/* Primary Filter Group Container (Responsive scroll horizontally di mobile) */}
+            <div className="lg:col-start-2 lg:row-start-1 flex flex-row items-stretch border border-[#1a1a1a] bg-white relative z-10 w-full lg:w-fit justify-start lg:justify-self-auto overflow-x-auto">
 
               {/* Tab All */}
               <button
@@ -712,7 +732,7 @@ export const HeroSection = () => {
           <div className="w-full mt-32 md:mt-48 grid grid-cols-1 lg:grid-cols-2 pl-4 md:pl-10 2xl:pl-[calc((100vw-1536px)/2+2.5rem)] pr-4 md:pr-10 2xl:pr-[calc((100vw-1536px)/2+2.5rem)] items-stretch">
 
             {/* KOLOM KIRI ROW 3: CONTACT ME */}
-            <div className="hidden lg:flex flex-col relative z-10 border border-[#1a1a1a] bg-[#1a1a1a] p-6 md:p-8 lg:p-8 justify-center items-center w-full">
+            <div id="contact-me" className="flex flex-col relative z-10 border border-[#1a1a1a] bg-[#1a1a1a] p-6 md:p-8 lg:p-8 justify-center items-center w-full order-2 lg:order-1 mt-8 lg:mt-0">
               <div className="flex flex-col items-center text-center gap-1">
                 <div className="text-[#F25A24] mb-1 md:mb-2">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-12 md:h-12">
@@ -761,7 +781,7 @@ export const HeroSection = () => {
             </div>
 
             {/* KOLOM KANAN ROW 3: MENU BAWAH */}
-            <div className="flex flex-col w-full relative z-0 border-l border-[#1a1a1a] bg-[#FAF9F6] lg:-ml-[1px]">
+            <div className="flex flex-col w-full relative z-0 border-t lg:border-t-0 border-r lg:border-r-0 border-l border-[#1a1a1a] bg-[#FAF9F6] lg:-ml-[1px] order-1 lg:order-2">
               {/* Message Icon Box (Top Left) */}
               <div className="flex flex-row w-full border-b border-[#1a1a1a]">
                 <div className="w-14 h-14 md:w-16 md:h-16 border-t border-r border-[#1a1a1a] flex items-center justify-center">
@@ -776,6 +796,7 @@ export const HeroSection = () => {
                 { label: 'EXPERIENCES', icon: <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'experiences' },
                 { label: 'PROJECTS', icon: <FolderOpen className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'projects' },
                 { label: 'BLOG', icon: <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'blog' },
+                { label: 'CONTACT', icon: <Send className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'contact-me' },
               ].map((item, idx) => (
                 <button
                   key={idx}
@@ -885,7 +906,7 @@ export const HeroSection = () => {
             {/* Close Button */}
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="absolute right-4 md:right-5 w-9 h-9 md:w-11 md:h-11 bg-[#1a1a1a] border border-[#333333] hover:border-[#F25A24] flex justify-center items-center text-white hover:text-[#F25A24] transition-colors cursor-pointer"
+              className="absolute right-4 md:right-5 w-10 h-10 md:w-11 md:h-11 bg-[#1a1a1a] border border-[#333333] hover:border-[#F25A24] flex justify-center items-center text-white hover:text-[#F25A24] transition-colors cursor-pointer"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -901,6 +922,7 @@ export const HeroSection = () => {
               { label: 'EXPERIENCES', icon: <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'experiences' },
               { label: 'PROJECTS', icon: <FolderOpen className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'projects' },
               { label: 'BLOG', icon: <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'blog' },
+              { label: 'CONTACT', icon: <Send className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'contact-me' },
             ].map((item, idx, arr) => (
               <button
                 key={idx}
