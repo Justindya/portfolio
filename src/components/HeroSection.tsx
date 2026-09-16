@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring, useScroll, useTransform } from 'framer-motion';
 import { Globe, Mail, Briefcase, Settings, Code, Layers, Database, Smile, FolderOpen, FileText, Send, BookOpen } from 'lucide-react';
+import Image from 'next/image';
+import catSvg from '../assets/cat for portfolio.svg.svg';
 
 // Komponen Pembantu SVG Tech Stack Resmi
 const TechIcon = ({ name }: { name: string }) => {
@@ -60,6 +62,9 @@ export const HeroSection = () => {
 
   // State untuk Filter Kategori
   const [activeCategory, setActiveCategory] = useState('All');
+
+  // State untuk Menu Overlay
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // State untuk Hover Project Bawah (Image Preview)
   const [hoveredProject, setHoveredProject] = useState<string>('01');
@@ -152,7 +157,7 @@ export const HeroSection = () => {
 
   return (
     // Tambahkan cursor-none untuk menyembunyikan kursor bawaan pada area hero ini
-    <section id="about-me" className="relative w-full min-h-screen bg-[#FAF9F6] flex flex-col overflow-clip font-sans cursor-none selection:bg-[#F25A24] selection:text-white pb-32">
+    <section id="about-me" className="relative w-full min-h-screen bg-[#FAF9F6] flex flex-col overflow-clip font-sans cursor-none selection:bg-[#F25A24] selection:text-white">
 
       {/* CUSTOM CURSOR ELEMENT */}
       <motion.div
@@ -179,15 +184,14 @@ export const HeroSection = () => {
         className="fixed top-6 md:top-10 left-0 right-0 z-50 flex justify-between items-center transition-all duration-300 px-4 md:px-10"
       >
         <motion.div
-          className="bg-[#111111] text-white h-14 w-auto px-4 md:px-6 flex items-center justify-center"
+          className="h-12 md:h-16 overflow-hidden flex items-start justify-center"
           style={{ x: leftLogoX, opacity: leftLogoOpacity }}
         >
-          <span
-            className="text-2xl md:text-3xl uppercase tracking-tighter whitespace-nowrap"
-            style={{ fontFamily: 'Impact, Arial, sans-serif' }}
-          >
-            CINDY NINDA
-          </span>
+          <Image
+            src={catSvg}
+            alt="Cat Logo"
+            className="h-[140%] w-auto object-contain object-top pointer-events-none [transform:scaleX(-1)] drop-shadow-md"
+          />
         </motion.div>
 
         <div className="flex flex-row items-center">
@@ -200,7 +204,10 @@ export const HeroSection = () => {
             </span>
           </motion.div>
 
-          <button className="w-14 h-14 bg-white border border-[#1a1a1a] flex flex-col justify-center items-center gap-[6px] transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[-8px_8px_0px_#1a1a1a] cursor-pointer">
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="w-14 h-14 bg-white border border-[#1a1a1a] flex flex-col justify-center items-center gap-[6px] transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[-8px_8px_0px_#1a1a1a] cursor-pointer"
+          >
             <span className="w-6 h-[2px] bg-[#F25A24]"></span>
             <span className="w-6 h-[2px] bg-[#F25A24]"></span>
             <span className="w-6 h-[2px] bg-[#F25A24]"></span>
@@ -744,10 +751,10 @@ export const HeroSection = () => {
                     placeholder="Send me a message !"
                     className="w-full bg-white text-[#1a1a1a] font-medium text-sm md:text-base px-5 py-2.5 md:py-3 border border-transparent focus:border-[#F25A24] focus:outline-none placeholder:text-[#1a1a1a]/50 pr-12 rounded-none transition-colors"
                   />
-                  <Send 
+                  <Send
                     onClick={handleSendMessage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-[#F25A24] group-focus-within:scale-110 group-hover:translate-x-1 transition-transform cursor-pointer" 
-                    strokeWidth={2.5} 
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-[#F25A24] group-focus-within:scale-110 group-hover:translate-x-1 transition-transform cursor-pointer"
+                    strokeWidth={2.5}
                   />
                 </div>
               </div>
@@ -770,8 +777,8 @@ export const HeroSection = () => {
                 { label: 'PROJECTS', icon: <FolderOpen className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'projects' },
                 { label: 'BLOG', icon: <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'blog' },
               ].map((item, idx) => (
-                <button 
-                  key={idx} 
+                <button
+                  key={idx}
                   onClick={() => {
                     const el = document.getElementById(item.target);
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -780,7 +787,7 @@ export const HeroSection = () => {
                 >
                   <div className="flex items-center">
                     <span className="overflow-hidden whitespace-nowrap w-0 group-hover:w-7 md:group-hover:w-8 transition-all duration-300 ease-out opacity-0 group-hover:opacity-100 flex items-center shrink-0">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                     </span>
                     <span className="font-bold text-[#1a1a1a] text-lg md:text-xl uppercase tracking-wider transition-all duration-300 group-hover:translate-x-1">
                       {item.label}
@@ -800,8 +807,8 @@ export const HeroSection = () => {
                   { href: 'https://github.com/Justindya', icon: <svg viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 fill-[#F25A24]"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg> },
                   { href: 'https://www.linkedin.com/in/cindy-ninda-526b36292/', icon: <svg viewBox="0 0 24 24" fill="none" stroke="#F25A24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg> },
                 ].map((social, idx) => (
-                  <a 
-                    key={idx} 
+                  <a
+                    key={idx}
                     href={social.href}
                     target={idx === 1 ? undefined : "_blank"}
                     rel={idx === 1 ? undefined : "noopener noreferrer"}
@@ -817,6 +824,119 @@ export const HeroSection = () => {
           </div>
         </div>
       </main>
+
+      {/* FULL-WIDTH FOOTER: BACK TO TOP */}
+      <footer
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="relative w-screen left-1/2 -translate-x-1/2 bg-[#FAF9F6] pt-8 md:pt-12 cursor-pointer group border-b-[4px] md:border-b-[6px] border-[#F25A24]"
+      >
+        <div className="w-full flex flex-col">
+          {/* Footer Content Wrapper (Aligned left & right) */}
+          <div className="relative w-full flex justify-between items-end px-4 md:px-10 2xl:px-[calc((100vw-1536px)/2+2.5rem)] z-0">
+
+            {/* Credit Text (Kiri Bawah) */}
+            <span className="text-[#1a1a1a] font-semibold tracking-wide text-[10px] md:text-xs mb-3 md:mb-5 ml-4 md:ml-10">
+              Designed & Developed by Cindy Ninda &bull; 2026
+            </span>
+
+            {/* Karakter Cat & Teks Back To Top (Kanan Bawah) */}
+            <div className="w-[50%] md:w-[40%] lg:w-[30%] flex flex-col items-center justify-end">
+
+              {/* Teks Back To Top (Tepat di atas kepala kucing) */}
+              <span
+                className="text-[#1a1a1a] font-bold tracking-widest text-[10px] md:text-xs mb-1 md:mb-2 pl-4 md:pl-8 transition-transform duration-300 ease-out group-hover:-translate-y-2 z-10"
+              >
+                Back to top
+              </span>
+
+              {/* Cat Image (Static, no hover movement, precise bottom crop) */}
+              <div className="w-full flex justify-center overflow-hidden">
+                <Image
+                  src={catSvg}
+                  alt="Back to top"
+                  className="w-full h-auto object-contain pointer-events-none -mb-[1.5%]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* --- MOBILE NAVIGATION OVERLAY --- */}
+      <div
+        className={`fixed inset-0 z-[100] flex justify-end items-start transition-all duration-500 ease-out ${isMenuOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
+      >
+        {/* Backdrop (Dark Overlay) */}
+        <div
+          onClick={() => setIsMenuOpen(false)}
+          className={`absolute inset-0 bg-black/80 transition-opacity duration-500 ease-out ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+        />
+
+        {/* Drawer Panel (Compact Vertical Box) */}
+        <div
+          className={`relative w-[85vw] sm:w-[350px] md:w-[400px] bg-[#FAF9F6] flex flex-col border border-[#1a1a1a] shadow-2xl transition-transform duration-500 ease-out mt-6 mr-4 md:mt-10 md:mr-10 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          {/* Header Overlay */}
+          <div className="relative flex justify-center items-center h-16 md:h-20 border-b border-[#1a1a1a] bg-[#111111]">
+            <span className="text-white text-xl md:text-2xl font-bold uppercase tracking-widest" style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
+              MENU
+            </span>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute right-4 md:right-5 w-9 h-9 md:w-11 md:h-11 bg-[#1a1a1a] border border-[#333333] hover:border-[#F25A24] flex justify-center items-center text-white hover:text-[#F25A24] transition-colors cursor-pointer"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          {/* Menu Items */}
+          <div className="flex flex-col w-full">
+            {[
+              { label: 'ABOUT ME', icon: <Smile className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'about-me' },
+              { label: 'EXPERIENCES', icon: <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'experiences' },
+              { label: 'PROJECTS', icon: <FolderOpen className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'projects' },
+              { label: 'BLOG', icon: <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'blog' },
+            ].map((item, idx, arr) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  const el = document.getElementById(item.target);
+                  if (el) {
+                    setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 300);
+                  }
+                }}
+                className={`w-full flex items-center justify-between px-6 py-5 md:py-6 bg-white ${idx !== arr.length - 1 ? 'border-b border-[#1a1a1a]' : ''} hover:bg-[#FAF9F6] transition-colors group cursor-pointer`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="relative flex items-center">
+                    {/* Animated Arrow */}
+                    <div className="absolute left-0 opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-[#F25A24]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </div>
+
+                    {/* Text Label */}
+                    <span className="font-black text-[#1a1a1a] text-xl md:text-2xl uppercase tracking-wider transition-transform duration-300 group-hover:translate-x-8 md:group-hover:translate-x-10">
+                      {item.label}
+                    </span>
+                  </div>
+                </div>
+                <div className="transition-transform duration-300 group-hover:-translate-x-2">
+                  {item.icon}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
