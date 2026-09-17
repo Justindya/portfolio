@@ -168,16 +168,16 @@ export const HeroSection = () => {
         }}
       >
         {/* Premium Custom Arrow Pointer */}
-        <svg 
-          viewBox="0 0 24 32" 
+        <svg
+          viewBox="0 0 24 32"
           className="w-auto h-9 md:h-12 drop-shadow-[0_8px_12px_rgba(0,0,0,0.6)]"
           preserveAspectRatio="xMidYMid meet"
         >
-          <path 
-            d="M2 2 L2 24 L8 18 L13.5 28 L17.5 25.5 L12 15.5 L20 15.5 Z" 
-            fill="#111111" 
-            stroke="white" 
-            strokeWidth="2.5" 
+          <path
+            d="M2 2 L2 24 L8 18 L13.5 28 L17.5 25.5 L12 15.5 L20 15.5 Z"
+            fill="#111111"
+            stroke="white"
+            strokeWidth="2.5"
             strokeLinejoin="round"
           />
         </svg>
@@ -196,37 +196,47 @@ export const HeroSection = () => {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="fixed top-6 md:top-10 left-0 right-0 z-50 flex justify-between items-center transition-all duration-300 px-4 md:px-10"
+        className="fixed top-6 md:top-10 left-0 right-0 z-50 flex justify-center pointer-events-none"
       >
-        <motion.div
-          className="h-10 md:h-12 w-auto flex items-start justify-start overflow-hidden pt-1"
-          style={{ x: leftLogoX, opacity: leftLogoOpacity }}
-        >
-          <Image
-            src={catSvg}
-            alt="Cat Logo"
-            className="h-[115%] w-auto object-contain pointer-events-none -scale-x-100 drop-shadow-md"
-          />
-        </motion.div>
+        {/* Outer Wrapper: Menduplikasi padding dari tag <main> */}
+        <div className="w-full px-4 md:px-10">
+          {/* Inner Wrapper: Menduplikasi kelas kontainer standar (seperti di section Experiences) tanpa pixel manual */}
+          <div className="w-full max-w-screen-2xl mx-auto px-4 md:px-10 flex justify-between items-center pointer-events-auto">
 
-        <div className="flex flex-row items-center">
-          <motion.div
-            className="bg-[#1a1a1a] text-white w-14 h-14 flex items-center justify-center font-black text-xl md:text-2xl"
-            style={{ opacity: rightLogoOpacity, x: rightLogoX }}
-          >
-            <span style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
-              CN
-            </span>
-          </motion.div>
+            {/* LOGO KIRI */}
+            <motion.div
+              className="h-10 md:h-12 w-auto flex items-start justify-start overflow-hidden pt-1"
+              style={{ x: leftLogoX, opacity: leftLogoOpacity }}
+            >
+              <Image
+                src={catSvg}
+                alt="Cat Logo"
+                className="h-[115%] w-auto object-contain pointer-events-none -scale-x-100 drop-shadow-md"
+              />
+            </motion.div>
 
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="w-14 h-14 bg-white border border-[#1a1a1a] flex flex-col justify-center items-center gap-[6px] transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[-8px_8px_0px_#1a1a1a] cursor-pointer"
-          >
-            <span className="w-6 h-[2px] bg-[#F25A24]"></span>
-            <span className="w-6 h-[2px] bg-[#F25A24]"></span>
-            <span className="w-6 h-[2px] bg-[#F25A24]"></span>
-          </button>
+            {/* MENU KANAN (Logo CN & Hamburger) */}
+            <div className="flex flex-row items-center">
+              <motion.div
+                className="bg-[#1a1a1a] text-white w-14 h-14 flex items-center justify-center font-black text-xl md:text-2xl"
+                style={{ opacity: rightLogoOpacity, x: rightLogoX }}
+              >
+                <span style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
+                  CN
+                </span>
+              </motion.div>
+
+              <button
+                onClick={() => setIsMenuOpen(true)}
+                className="w-14 h-14 bg-white border border-[#1a1a1a] flex flex-col justify-center items-center gap-[6px] transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[-8px_8px_0px_#1a1a1a] cursor-pointer"
+              >
+                <span className="w-6 h-[2px] bg-[#F25A24]"></span>
+                <span className="w-6 h-[2px] bg-[#F25A24]"></span>
+                <span className="w-6 h-[2px] bg-[#F25A24]"></span>
+              </button>
+            </div>
+
+          </div>
         </div>
       </motion.header>
 
@@ -234,7 +244,7 @@ export const HeroSection = () => {
       <main className="relative z-10 w-full px-4 md:px-10">
 
         {/* BLOK VIEWPORT 1: ABOVE THE FOLD */}
-        <div className="w-full min-h-screen flex flex-col items-center justify-center pt-[100px] md:pt-[120px]">
+        <div className="w-full pt-[100px] pb-10 md:py-0 md:min-h-screen flex flex-col items-center justify-center">
           {/* Subtitle / Role */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -258,43 +268,36 @@ export const HeroSection = () => {
             transition={{ type: 'spring', stiffness: 70, damping: 15, delay: 0.5 }}
             className="text-center flex flex-col items-center justify-center w-full gap-4 md:gap-8"
           >
-            {/* Baris Pertama: HELLO (PUTIH 3D INTERAKTIF) & THERE (SOLID FLAT STATIS) */}
+            {/* Fluid Hero Typography */}
             <h2
-              className="uppercase leading-[0.85] tracking-tighter flex flex-row flex-wrap items-baseline justify-center gap-x-4 gap-y-2 md:gap-4 w-full"
+              className="uppercase leading-[1.1] md:leading-[0.85] tracking-tighter flex flex-row flex-wrap items-baseline justify-center gap-x-3 gap-y-1 md:gap-4 w-full max-w-5xl"
               style={{ fontFamily: 'Impact, Arial, sans-serif' }}
             >
               <div className="flex flex-row">
-                {renderInteractiveWord("HELLO,", true, "text-[14vw] md:text-[110px] lg:text-[150px] text-white")}
+                {renderInteractiveWord("HELLO,", true, "text-5xl sm:text-6xl md:text-[110px] lg:text-[150px] text-white")}
               </div>
 
-              <span className="text-[14vw] md:text-[90px] lg:text-[120px] text-[#1a1a1a]">
+              <span className="text-4xl sm:text-5xl md:text-[90px] lg:text-[120px] text-[#1a1a1a]">
                 THERE!
               </span>
-            </h2>
 
-            {/* Baris Kedua: I'M (SOLID FLAT STATIS) & CINDY NINDA (PUTIH 3D INTERAKTIF) */}
-            <h2
-              className="uppercase leading-[0.85] tracking-tighter mt-0 md:mt-4 flex flex-row flex-wrap items-baseline justify-center gap-x-4 gap-y-2 md:gap-4 w-full"
-              style={{ fontFamily: 'Impact, Arial, sans-serif' }}
-            >
-              <span className="text-[14vw] md:text-[90px] lg:text-[120px] text-[#1a1a1a]">
+              <div className="basis-full h-0 m-0 p-0"></div>
+
+              <span className="text-4xl sm:text-5xl md:text-[90px] lg:text-[120px] text-[#1a1a1a]">
                 I&apos;M
               </span>
 
-              <div className="flex flex-row flex-wrap justify-center gap-x-4 gap-y-2 md:gap-4">
-                <div className="flex flex-row">
-                  {renderInteractiveWord("CINDY", true, "text-[14vw] md:text-[110px] lg:text-[150px] text-white")}
-                </div>
-                <div className="flex flex-row">
-                  {renderInteractiveWord("NINDA", true, "text-[14vw] md:text-[110px] lg:text-[150px] text-white")}
-                </div>
+              <div className="flex flex-row flex-nowrap shrink-0">
+                {renderInteractiveWord("CINDY", true, "text-5xl sm:text-6xl md:text-[110px] lg:text-[150px] text-white")}
+                {renderInteractiveWord(" ", false, "text-5xl sm:text-6xl md:text-[110px] lg:text-[150px]")}
+                {renderInteractiveWord("NINDA", true, "text-5xl sm:text-6xl md:text-[110px] lg:text-[150px] text-white")}
               </div>
             </h2>
           </motion.div>
         </div>
 
         {/* BLOK VIEWPORT 2: BELOW THE FOLD */}
-        <div className="w-full flex flex-col items-center pt-10 pb-20">
+        <div className="w-full flex flex-col items-center pt-6 md:pt-10 pb-12 md:pb-20">
           {/* Subtitle Paragraf Terpersonalisasi */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -306,7 +309,7 @@ export const HeroSection = () => {
           </motion.p>
 
           {/* Social Media Links (Border Collapse) */}
-          <div className="w-full flex justify-end mt-12 md:mt-16">
+          <div className="w-full max-w-screen-2xl mx-auto px-4 md:px-10 flex justify-end mt-12 md:mt-16">
             <div className="flex flex-row">
               <a href="https://www.instagram.com/indyndaa/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 border border-[#1a1a1a] bg-white hover:bg-[#FAF9F6] transition-colors -ml-[1px] first:ml-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#F25A24] w-6 h-6">
@@ -336,13 +339,13 @@ export const HeroSection = () => {
           {/* --- EXPERIENCES SECTION HEADER --- */}
           <div id="experiences" className="w-full flex flex-col items-start mt-20 md:mt-32 px-4 md:px-10 max-w-screen-2xl mx-auto">
             <h2
-              className="text-[8vw] sm:text-[9vw] md:text-[90px] lg:text-[130px] leading-none text-[#1a1a1a] uppercase tracking-tighter"
+              className="text-5xl sm:text-7xl md:text-[90px] lg:text-[130px] leading-[0.9] text-[#1a1a1a] uppercase tracking-tighter"
               style={{ fontFamily: 'Impact, Arial, sans-serif' }}
             >
               PROFESSIONAL
             </h2>
             <h2
-              className="text-[8vw] sm:text-[9vw] md:text-[90px] lg:text-[130px] leading-none uppercase tracking-tighter flex flex-row flex-wrap mt-6 md:mt-4 lg:mt-6"
+              className="text-5xl sm:text-7xl md:text-[90px] lg:text-[130px] leading-[0.9] uppercase tracking-tighter flex flex-row flex-wrap mt-2 md:mt-4 lg:mt-6"
               style={{ fontFamily: 'Impact, Arial, sans-serif' }}
             >
               {"EXPERIENCES".split('').map((char, index) => (
@@ -370,10 +373,10 @@ export const HeroSection = () => {
           </div>
 
           {/* PROJECT LIST GRID */}
-          <div className="w-full mt-12 md:mt-20 flex flex-col md:grid md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] relative items-stretch">
+          <div className="w-full max-w-screen-2xl mx-auto px-4 md:px-10 mt-12 md:mt-20 flex flex-col-reverse md:grid md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] relative items-stretch">
 
             {/* Kolom Kiri: Daftar Proyek */}
-            <div className="flex flex-col border-t border-l border-r border-[#1a1a1a] mx-4 md:mx-0 md:ml-10 2xl:ml-[calc((100vw-1536px)/2+2.5rem)] min-w-0">
+            <div className="flex flex-col border-t border-l border-r border-[#1a1a1a] min-w-0">
               {/* Baris 1 */}
               <div className="p-6 md:p-8 bg-transparent hover:bg-white border border-transparent border-b-[#1a1a1a] hover:border-[#1a1a1a] hover:-translate-y-2 hover:translate-x-2 hover:shadow-[-10px_10px_0px_#1a1a1a] hover:z-50 transition-all duration-300 ease-out cursor-pointer group relative min-w-0 overflow-hidden md:overflow-visible">
 
@@ -485,12 +488,12 @@ export const HeroSection = () => {
             </div>
 
             {/* --- KOLOM KANAN: KOTAK IMPACT DRIVEN --- */}
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full mt-8 md:mt-0 mb-14 md:mb-0">
 
               {/* Wrapper Absolut untuk 2 Ikon (TETAP DI ATAS, TIDAK IKUT SCROLL) */}
-              <div className="absolute -top-14 -left-28 flex flex-row z-20">
+              <div className="flex absolute -bottom-14 right-0 md:bottom-auto md:right-auto md:-top-14 md:-left-28 flex-row z-20">
                 {/* Kotak Tas (Menggantung di luar kiri) */}
-                <div className="w-14 h-14 bg-transparent border border-[#1a1a1a] border-b-0 flex items-center justify-center">
+                <div className="w-14 h-14 bg-[#FAF9F6] border border-[#1a1a1a] border-t-0 md:border-t md:border-b-0 flex items-center justify-center">
                   <Briefcase className="text-[#1a1a1a] w-6 h-6" />
                 </div>
                 {/* Kotak Gerigi (Rata dengan ujung kiri kotak hitam) */}
@@ -500,7 +503,7 @@ export const HeroSection = () => {
               </div>
 
               {/* STICKY GROUP (Hanya Kotak Hitam yang Meluncur Turun) */}
-              <div className="sticky top-12 md:top-24 w-full h-fit -mt-14 z-10">
+              <div className="sticky top-12 md:top-24 w-full h-fit mt-0 md:-mt-14 z-10">
                 {/* Kotak Gelap */}
                 <div className="bg-[#1a1a1a] text-white px-6 md:px-8 py-4 md:py-6 h-fit w-full relative z-10 flex flex-col items-start justify-start">
                   {/* Teks Konten */}
@@ -565,74 +568,76 @@ export const HeroSection = () => {
           </div>
           {/* KATEGORI FILTER (Di Bawah Proyek) */}
           {/* KATEGORI FILTER (Di Bawah Proyek) */}
-          <div className="w-full mt-10 md:mt-16 grid grid-cols-1 lg:grid-cols-[1fr_auto] grid-rows-[auto_1fr] pl-4 md:pl-10 2xl:pl-[calc((100vw-1536px)/2+2.5rem)] pr-4 md:pr-10 2xl:pr-[calc((100vw-1536px)/2+2.5rem)]">
+          <div className="w-full max-w-screen-2xl mx-auto px-4 md:px-10 mt-6 md:mt-12 grid grid-cols-1 lg:grid-cols-[1fr_auto] grid-rows-[auto_1fr] items-start gap-y-0">
 
-            {/* Primary Filter Group Container (Responsive scroll horizontally di mobile) */}
-            <div className="lg:col-start-2 lg:row-start-1 flex flex-row items-stretch border border-[#1a1a1a] bg-white relative z-10 w-full lg:w-fit justify-start lg:justify-self-auto overflow-x-auto">
+            {/* Wrapper untuk padding agar pop-up 3D tidak terpotong */}
+            <div className="row-start-1 lg:col-start-2 lg:row-start-1 w-full lg:w-fit py-4 -my-4">
+              <div className="grid grid-cols-4 md:flex md:flex-row items-stretch border border-[#1a1a1a] bg-white relative z-10 w-full md:w-max lg:w-fit justify-start lg:justify-self-auto">
 
-              {/* Tab All */}
-              <button
-                onClick={() => setActiveCategory('All')}
-                className={`relative shrink-0 px-6 md:px-8 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider border-r border-[#1a1a1a] transition-all duration-300 group ${activeCategory === 'All'
-                  ? 'bg-transparent text-white z-0'
-                  : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-mt-[1px] hover:-mb-[1px] hover:-ml-[1px]'
-                  }`}
-              >
-                <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'All' ? 'scale-x-100' : 'scale-x-0'}`} />
-                <span className="relative z-10 flex items-center justify-center">All</span>
-              </button>
+                {/* Tab All */}
+                <button
+                  onClick={() => setActiveCategory('All')}
+                  className={`relative shrink-0 px-2 md:px-8 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider border-r border-[#1a1a1a] transition-all duration-300 group ${activeCategory === 'All'
+                    ? 'bg-transparent text-white z-0'
+                    : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-mt-[1px] hover:-mb-[1px] hover:-ml-[1px]'
+                    }`}
+                >
+                  <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'All' ? 'scale-x-100' : 'scale-x-0'}`} />
+                  <span className="relative z-10 flex items-center justify-center">All</span>
+                </button>
 
-              {/* Tab Frontend */}
-              <button
-                onClick={() => setActiveCategory('Frontend')}
-                className={`relative shrink-0 px-5 md:px-7 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider border-r border-[#1a1a1a] transition-all duration-300 group ${activeCategory === 'Frontend'
-                  ? 'bg-transparent text-white z-0'
-                  : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-mt-[1px] hover:-mb-[1px] hover:-ml-[1px]'
-                  }`}
-              >
-                <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'Frontend' ? 'scale-x-100' : 'scale-x-0'}`} />
-                <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
-                  Frontend
-                  <Code className={`w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110 ${activeCategory === 'Frontend' ? 'text-white' : 'text-[#F25A24]'}`} strokeWidth={2.5} />
-                </span>
-              </button>
+                {/* Tab Frontend */}
+                <button
+                  onClick={() => setActiveCategory('Frontend')}
+                  className={`relative shrink-0 px-2 md:px-7 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider border-r border-[#1a1a1a] transition-all duration-300 group ${activeCategory === 'Frontend'
+                    ? 'bg-transparent text-white z-0'
+                    : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-mt-[1px] hover:-mb-[1px] hover:-ml-[1px]'
+                    }`}
+                >
+                  <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'Frontend' ? 'scale-x-100' : 'scale-x-0'}`} />
+                  <span className="relative z-10 flex items-center justify-center gap-0 md:gap-3">
+                    <span className="hidden md:inline">Frontend</span>
+                    <Code className={`w-5 h-5 transition-transform group-hover:scale-110 ${activeCategory === 'Frontend' ? 'text-white' : 'text-[#F25A24]'}`} strokeWidth={2.5} />
+                  </span>
+                </button>
 
-              {/* Tab Full-Stack */}
-              <button
-                onClick={() => setActiveCategory('Full-Stack')}
-                className={`relative shrink-0 px-5 md:px-7 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider border-r border-[#1a1a1a] transition-all duration-300 group ${activeCategory === 'Full-Stack'
-                  ? 'bg-transparent text-white z-0'
-                  : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-mt-[1px] hover:-mb-[1px] hover:-ml-[1px]'
-                  }`}
-              >
-                <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'Full-Stack' ? 'scale-x-100' : 'scale-x-0'}`} />
-                <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
-                  Full-Stack
-                  <Layers className={`w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110 ${activeCategory === 'Full-Stack' ? 'text-white' : 'text-[#F25A24]'}`} strokeWidth={2.5} />
-                </span>
-              </button>
+                {/* Tab Full-Stack */}
+                <button
+                  onClick={() => setActiveCategory('Full-Stack')}
+                  className={`relative shrink-0 px-2 md:px-7 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider border-r border-[#1a1a1a] transition-all duration-300 group ${activeCategory === 'Full-Stack'
+                    ? 'bg-transparent text-white z-0'
+                    : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-mt-[1px] hover:-mb-[1px] hover:-ml-[1px]'
+                    }`}
+                >
+                  <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'Full-Stack' ? 'scale-x-100' : 'scale-x-0'}`} />
+                  <span className="relative z-10 flex items-center justify-center gap-0 md:gap-3">
+                    <span className="hidden md:inline">Full-Stack</span>
+                    <Layers className={`w-5 h-5 transition-transform group-hover:scale-110 ${activeCategory === 'Full-Stack' ? 'text-white' : 'text-[#F25A24]'}`} strokeWidth={2.5} />
+                  </span>
+                </button>
 
-              {/* Tab Backend */}
-              <button
-                onClick={() => setActiveCategory('Backend')}
-                className={`relative shrink-0 px-5 md:px-7 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider transition-all duration-300 group ${activeCategory === 'Backend'
-                  ? 'bg-transparent text-white z-0'
-                  : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-m-[1px]'
-                  }`}
-              >
-                <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'Backend' ? 'scale-x-100' : 'scale-x-0'}`} />
-                <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
-                  Backend
-                  <Database className={`w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110 ${activeCategory === 'Backend' ? 'text-white' : 'text-[#F25A24]'}`} strokeWidth={2.5} />
-                </span>
-              </button>
+                {/* Tab Backend */}
+                <button
+                  onClick={() => setActiveCategory('Backend')}
+                  className={`relative shrink-0 px-2 md:px-7 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wider transition-all duration-300 group ${activeCategory === 'Backend'
+                    ? 'bg-transparent text-white z-0'
+                    : 'bg-white text-[#1a1a1a] z-0 hover:-translate-y-1.5 hover:translate-x-1.5 hover:shadow-[-6px_6px_0px_#2b2b2b] hover:z-20 hover:border hover:border-[#1a1a1a] hover:-m-[1px]'
+                    }`}
+                >
+                  <div className={`absolute inset-0 bg-[#1a1a1a] origin-center transition-transform duration-300 ease-out ${activeCategory === 'Backend' ? 'scale-x-100' : 'scale-x-0'}`} />
+                  <span className="relative z-10 flex items-center justify-center gap-0 md:gap-3">
+                    <span className="hidden md:inline">Backend</span>
+                    <Database className={`w-5 h-5 transition-transform group-hover:scale-110 ${activeCategory === 'Backend' ? 'text-white' : 'text-[#F25A24]'}`} strokeWidth={2.5} />
+                  </span>
+                </button>
+              </div>
             </div>
 
-            {/* KOLOM KIRI: IMAGE PREVIEW (1fr, Otomatis Mengisi Ruang Kiri hingga Margin Kiri!) */}
-            <div className="hidden lg:flex flex-col lg:col-start-1 lg:row-start-2 relative z-10 transition-all duration-500 ease-out -mt-[1px] h-full min-h-[520px] xl:min-h-[550px]">
-              <div className="w-full h-[75%] border border-[#1a1a1a] bg-[#FAF9F6] flex flex-col relative overflow-hidden">
+            {/* KOLOM KIRI: IMAGE PREVIEW (Di Bawah List Card pada Mobile) */}
+            <div className="flex flex-col row-start-3 lg:col-start-1 lg:row-start-2 relative lg:sticky lg:top-24 z-10 transition-all duration-500 ease-out -mt-[1px] h-auto lg:h-[520px] xl:h-[550px] w-full">
+              <div className="w-full h-auto lg:h-[75%] border border-[#1a1a1a] bg-[#FAF9F6] flex flex-col relative overflow-hidden">
                 {/* Placeholder Dynamic Content */}
-                <div className="flex-1 flex items-center justify-center bg-[#1a1a1a]/5 transition-opacity duration-300 relative min-h-0">
+                <div className="flex-1 flex items-center justify-center bg-[#1a1a1a]/5 transition-opacity duration-300 relative min-h-[250px] sm:min-h-[300px] lg:min-h-0">
                   <span className="font-bold text-xl xl:text-2xl text-[#1a1a1a]/30 uppercase tracking-widest text-center px-4 mb-8">
                     {hoveredProject === '01' ? 'SuraJa Preview' :
                       hoveredProject === '02' ? 'UniTrack Preview' :
@@ -645,54 +650,56 @@ export const HeroSection = () => {
                 <div className="w-full border-t border-[#1a1a1a] bg-[#FAF9F6] z-20 flex flex-col shrink-0">
 
                   {/* Baris Atas: Area Nama Proyek & Tech Stack */}
-                  <div className="flex-1 flex items-center justify-between px-6 md:px-10 py-5 lg:py-7 min-w-0">
+                  <div className="flex-1 flex flex-col lg:flex-row items-start lg:items-center justify-between px-6 md:px-8 lg:px-10 py-6 md:py-8 lg:py-7 min-w-0 gap-4 md:gap-5 lg:gap-0">
                     {/* Teks Nama Proyek Dinamis (Kiri) */}
-                    <span className="text-xl md:text-2xl lg:text-3xl text-[#1a1a1a] tracking-tight transition-all duration-300 min-w-0 truncate" style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
+                    <span className="text-xl md:text-2xl lg:text-3xl text-[#1a1a1a] tracking-tight transition-all duration-300 min-w-0 truncate w-full lg:w-auto" style={{ fontFamily: 'Impact, Arial, sans-serif' }}>
                       {hoveredProject === '01' ? 'SuraJa' :
                         hoveredProject === '02' ? 'UniTrack' :
                           hoveredProject === '03' ? 'Sport On Website' :
                             hoveredProject === '04' ? 'Cindyninda' : 'Project'}
-                    </span>
-
-                    {/* Tech Stack Logo Badges Dinamis (Kanan) */}
-                    <div className="flex items-center gap-3 shrink-0 ml-4">
-                      {hoveredProject === '01' && (
-                        <>
-                          <TechIcon name="Laravel" />
-                          <TechIcon name="Blade" />
-                          <TechIcon name="CSS" />
-                          <TechIcon name="JavaScript" />
-                        </>
-                      )}
-                      {hoveredProject === '02' && (
-                        <>
-                          <TechIcon name="Laravel" />
-                          <TechIcon name="Blade" />
-                        </>
-                      )}
-                      {hoveredProject === '03' && (
-                        <>
-                          <TechIcon name="Next.js" />
-                          <TechIcon name="TypeScript" />
-                        </>
-                      )}
-                      {hoveredProject === '04' && (
-                        <>
-                          <TechIcon name="Next.js" />
-                          <TechIcon name="TypeScript" />
-                          <TechIcon name="JavaScript" />
-                          <TechIcon name="CSS" />
-                        </>
-                      )}
+                    </span>                    {/* Tech Stack Logo Badges Dinamis (Kanan) */}
+                    <div className="flex flex-col lg:flex-row items-start lg:items-center gap-3 md:gap-4 lg:gap-3 shrink-0 lg:ml-4 w-full lg:w-auto mt-1 lg:mt-0">
+                      <div className="flex flex-row flex-wrap items-center gap-2 lg:gap-3">
+                        {hoveredProject === '01' && (
+                          <>
+                            <TechIcon name="Laravel" />
+                            <TechIcon name="Blade" />
+                            <TechIcon name="CSS" />
+                            <TechIcon name="JavaScript" />
+                          </>
+                        )}
+                        {hoveredProject === '02' && (
+                          <>
+                            <TechIcon name="Laravel" />
+                            <TechIcon name="Blade" />
+                          </>
+                        )}
+                        {hoveredProject === '03' && (
+                          <>
+                            <TechIcon name="Next.js" />
+                            <TechIcon name="TypeScript" />
+                          </>
+                        )}
+                        {hoveredProject === '04' && (
+                          <>
+                            <TechIcon name="Next.js" />
+                            <TechIcon name="TypeScript" />
+                            <TechIcon name="JavaScript" />
+                            <TechIcon name="CSS" />
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Baris Bawah Tambahan: Kotak Label Kategori (Melampaui batas h-[75%] secara natural) */}
+              {/* Baris Bawah Tambahan: Kotak Label Kategori (Berlaku untuk Desktop & Mobile) */}
               <div className="flex w-fit border-t border-b border-l border-[#1a1a1a] shrink-0 bg-[#FAF9F6] -mt-[1px] relative z-20">
                 <div className="px-5 md:px-7 py-3 md:py-4 flex items-center justify-center gap-2 md:gap-3 border-r border-[#1a1a1a] bg-white shrink-0">
-                  <Code className="w-4 h-4 md:w-5 md:h-5 text-[#F25A24] shrink-0" strokeWidth={2.5} />
+                  {hoveredProject === '01' ? <Layers className="w-4 h-4 md:w-5 md:h-5 text-[#F25A24] shrink-0" strokeWidth={2.5} /> :
+                    hoveredProject === '02' ? <Database className="w-4 h-4 md:w-5 md:h-5 text-[#F25A24] shrink-0" strokeWidth={2.5} /> :
+                      <Code className="w-4 h-4 md:w-5 md:h-5 text-[#F25A24] shrink-0" strokeWidth={2.5} />}
                   <span className="font-bold text-[#1a1a1a] text-sm md:text-base uppercase tracking-wider truncate">
                     {hoveredProject === '01' ? 'Full-Stack' :
                       hoveredProject === '02' ? 'Backend' :
@@ -703,8 +710,8 @@ export const HeroSection = () => {
               </div>
             </div>
 
-            {/* KOLOM KANAN: DAFTAR CARD PROYEK LIST (Auto, lebarnya mengunci selebar filter di atasnya) */}
-            <div className="lg:col-start-2 lg:row-start-2 flex flex-col w-full min-w-0 border-x border-[#1a1a1a] bg-[#FAF9F6] relative z-0 -mt-[1px] -ml-[1px] group/list self-start">
+            {/* KOLOM KANAN: DAFTAR CARD PROYEK LIST */}
+            <div className="row-start-2 lg:col-start-2 lg:row-start-2 flex flex-col w-full min-w-0 border-x border-t lg:border-t-0 border-[#1a1a1a] bg-[#FAF9F6] relative z-0 -mt-[1px] -ml-0 lg:-ml-[1px] group/list self-start">
 
               {filteredProjects.map((project) => (
                 <div
@@ -732,7 +739,7 @@ export const HeroSection = () => {
           <div className="w-full mt-32 md:mt-48 grid grid-cols-1 lg:grid-cols-2 pl-4 md:pl-10 2xl:pl-[calc((100vw-1536px)/2+2.5rem)] pr-4 md:pr-10 2xl:pr-[calc((100vw-1536px)/2+2.5rem)] items-stretch">
 
             {/* KOLOM KIRI ROW 3: CONTACT ME */}
-            <div id="contact-me" className="flex flex-col relative z-10 border border-[#1a1a1a] bg-[#1a1a1a] p-6 md:p-8 lg:p-8 justify-center items-center w-full order-2 lg:order-1 mt-8 lg:mt-0">
+            <div id="contact-me" className="flex flex-col relative z-20 border border-[#1a1a1a] bg-[#1a1a1a] p-6 md:p-8 lg:p-8 justify-center items-center w-full order-2 lg:order-1 -mt-[1px] lg:mt-0">
               <div className="flex flex-col items-center text-center gap-1">
                 <div className="text-[#F25A24] mb-1 md:mb-2">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-12 md:h-12">
@@ -795,7 +802,6 @@ export const HeroSection = () => {
                 { label: 'ABOUT ME', icon: <Smile className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'about-me' },
                 { label: 'EXPERIENCES', icon: <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'experiences' },
                 { label: 'PROJECTS', icon: <FolderOpen className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'projects' },
-                { label: 'BLOG', icon: <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'blog' },
                 { label: 'CONTACT', icon: <Send className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'contact-me' },
               ].map((item, idx) => (
                 <button
@@ -820,8 +826,8 @@ export const HeroSection = () => {
                 </button>
               ))}
 
-              {/* Social Media Grid */}
-              <div className="grid grid-cols-4 w-full bg-white border-b border-r border-[#1a1a1a] shrink-0">
+              {/* Social Media Grid (Desktop Only) */}
+              <div className="hidden lg:grid grid-cols-4 w-full bg-white border-b border-r border-[#1a1a1a] shrink-0">
                 {[
                   { href: 'https://www.instagram.com/indyndaa/', icon: <svg viewBox="0 0 24 24" fill="none" stroke="#F25A24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg> },
                   { href: 'mailto:cindyninda66@gmail.com', icon: <Mail className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} /> },
@@ -841,6 +847,28 @@ export const HeroSection = () => {
                   </a>
                 ))}
               </div>
+            </div>
+
+            {/* Social Media Grid (Mobile Only - Placed below Contact Me) */}
+            <div className="grid lg:hidden grid-cols-4 w-full bg-white border-b border-x border-[#1a1a1a] shrink-0 order-3 -mt-[1px] relative z-20">
+              {[
+                { href: 'https://www.instagram.com/indyndaa/', icon: <svg viewBox="0 0 24 24" fill="none" stroke="#F25A24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg> },
+                { href: 'mailto:cindyninda66@gmail.com', icon: <Mail className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} /> },
+                { href: 'https://github.com/Justindya', icon: <svg viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 fill-[#F25A24]"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg> },
+                { href: 'https://www.linkedin.com/in/cindy-ninda-526b36292/', icon: <svg viewBox="0 0 24 24" fill="none" stroke="#F25A24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg> },
+              ].map((social, idx) => (
+                <a
+                  key={idx}
+                  href={social.href}
+                  target={idx === 1 ? undefined : "_blank"}
+                  rel={idx === 1 ? undefined : "noopener noreferrer"}
+                  className={`relative flex items-center justify-center py-5 md:py-6 bg-white border border-transparent ${idx < 3 ? 'border-r-[#1a1a1a]' : ''} hover:border-[#1a1a1a] transition-all duration-300 ease-out group z-0 hover:-translate-y-2 hover:translate-x-2 hover:shadow-[-8px_8px_0px_#1a1a1a] hover:z-50`}
+                >
+                  <div className="group-hover:-translate-y-1 group-hover:scale-110 transition-transform duration-300">
+                    {social.icon}
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -921,7 +949,6 @@ export const HeroSection = () => {
               { label: 'ABOUT ME', icon: <Smile className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'about-me' },
               { label: 'EXPERIENCES', icon: <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'experiences' },
               { label: 'PROJECTS', icon: <FolderOpen className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'projects' },
-              { label: 'BLOG', icon: <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'blog' },
               { label: 'CONTACT', icon: <Send className="w-5 h-5 md:w-6 md:h-6 text-[#F25A24]" strokeWidth={2.5} />, target: 'contact-me' },
             ].map((item, idx, arr) => (
               <button
